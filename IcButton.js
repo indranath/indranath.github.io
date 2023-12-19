@@ -1,6 +1,36 @@
 class IcButton extends HTMLElement {
+
+    constructor() {
+        super();
+        this.text = "Ok";
+    }
+
     connectedCallback() {
-        this.textContent = "I See Button";
+        console.log('connectedCallback');
+
+        const shadow = this.attachShadow({mode: 'open'});
+
+        shadow.innerHTML = `
+            <div>Button:${this.text}</div>
+        `;
+
+    }
+
+    disconnectedCallback() {}
+
+    adoptedCallback() {}
+
+    static get observedAttributes() {
+        return ['text'];
+    }
+
+    attributeChangedCallback(property, oldValue, newValue) {
+        console.log('attributeChangedCallback');
+
+        if (oldValue === newValue)
+            return;
+
+        this[property] = newValue;
     }
 }
 
